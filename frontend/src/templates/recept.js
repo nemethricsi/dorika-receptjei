@@ -7,6 +7,9 @@ import { ContainerStyles } from '../styles/ContainerStyles';
 const Image = styled(Img)`
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 1rem 0;
 `;
 
 export default function Recept({ data }) {

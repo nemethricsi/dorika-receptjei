@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Img from 'gatsby-plugin-sanity-image';
 import { graphql, Link } from 'gatsby';
 import { ContainerStyles } from '../styles/ContainerStyles';
 import SearchIcon from '../images/searchicon.png';
@@ -40,7 +41,7 @@ const ReceptList = styled.ul`
   padding-left: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 
   li  {
     margin: 0;
@@ -56,6 +57,23 @@ const ReceptList = styled.ul`
   }
 `;
 
+const RecipeTitleWrapper = styled.article`
+  padding: 12px 10px 10px;
+  /* width: max-content; */
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img {
+    width: 40px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+`;
+
 const IndexPage = ({ data }) => {
   const receptek = data.allSanityRecept.nodes;
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,9 +82,7 @@ const IndexPage = ({ data }) => {
     receptek.map((recept) => {
       return {
         ...recept,
-        nev: `<li key={${recept._id}}>
-            <Link to={'/recept/${recept.slug.current}'}>${recept.nev}</Link>
-          </li>`,
+        nev: `<li>${recept.nev}</li>`,
       };
     })
   );
@@ -84,9 +100,7 @@ const IndexPage = ({ data }) => {
         ? filteredSearch.map((recept) => {
             return {
               ...recept,
-              nev: `<li key={${recept._id}}>
-        <Link to={'/recept/${recept.slug.current}'}>${recept.nev}</Link>
-        </li>`,
+              nev: `<li>${recept.nev}</li>`,
             };
           })
         : filteredSearch.map((recept) => {
@@ -96,12 +110,9 @@ const IndexPage = ({ data }) => {
             );
             return {
               ...recept,
-              nev: `<li key={${recept._id}}>
-          <Link to={'/recept/${recept.slug.current}'}>${matchedNev}</Link>
-          </li>`,
+              nev: `<li>${matchedNev}</li>`,
             };
           });
-    // console.log({ highlighted });
     setFiltered(() => {
       return highlighted;
     });
@@ -123,11 +134,13 @@ const IndexPage = ({ data }) => {
         <SearchIconImage src={SearchIcon} alt='search icon' />
       </SearchWrapper>
       <ReceptList>
-        {filtered.map(({ _id, nev, slug }) => (
-          // <li key={_id}>
-          //   <Link to={`/recept/${slug.current}`}>{nev}</Link>
-          // </li>
-          <div dangerouslySetInnerHTML={{ __html: nev }} />
+        {filtered.map(({ _id, nev, slug, kep }) => (
+          <Link key={_id} to={`/recept/${slug.current}`}>
+            <RecipeTitleWrapper>
+              <Img {...kep} alt={nev} />
+              <div dangerouslySetInnerHTML={{ __html: nev }} />
+            </RecipeTitleWrapper>
+          </Link>
         ))}
       </ReceptList>
     </ContainerStyles>
@@ -144,6 +157,9 @@ export const query = graphql`
         nev
         slug {
           current
+        }
+        kep {
+          ...ImageWithPreview
         }
       }
     }
