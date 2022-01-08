@@ -5,11 +5,31 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `@slixites/gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`Special Elite\:400`],
+        display: 'swap',
+        preconnect: true,
+        attributes: {
+          rel: 'stylesheet preload prefetch',
+          as: 'style',
+        },
+      },
+    },
+    {
       resolve: 'gatsby-source-sanity',
       options: {
         projectId: '23cwbmnm',
         dataset: 'production',
         watchMode: process.env.NODE_ENV === 'development',
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-sanity-image',
+      options: {
+        // Sanity project info (required)
+        projectId: '23cwbmnm',
+        dataset: 'production',
       },
     },
     'gatsby-plugin-styled-components',
