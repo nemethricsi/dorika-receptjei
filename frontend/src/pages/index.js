@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 
 const IndexPage = ({ data }) => {
   const receptek = data.allSanityRecept.nodes;
@@ -7,8 +7,10 @@ const IndexPage = ({ data }) => {
     <main>
       <h1>Dóri receptjei</h1>
       <ul>
-        {receptek.map(({ _id, nev }) => (
-          <li key={_id}>{nev}</li>
+        {receptek.map(({ _id, nev, slug }) => (
+          <li key={_id}>
+            <Link to={`/recept/${slug.current}`}>{nev}</Link>
+          </li>
         ))}
       </ul>
     </main>
@@ -21,8 +23,11 @@ export const query = graphql`
   query {
     allSanityRecept {
       nodes {
-        nev
         _id
+        nev
+        slug {
+          current
+        }
       }
     }
   }
