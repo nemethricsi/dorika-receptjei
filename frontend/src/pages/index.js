@@ -60,17 +60,23 @@ const ReceptList = styled.ul`
 const RecipeTitleWrapper = styled.article`
   padding: 12px 10px 10px;
   /* width: max-content; */
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border: 2px solid hsla(1 0% 50% / 0.3);
   border-radius: 6px;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
+  transition: all 0.2s ease-in-out;
 
   img {
     width: 40px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
+    border-radius: 6px;
+  }
+
+  &:hover {
+    border: 2px solid #0174df;
+    background-color: #f2f9fc;
   }
 `;
 

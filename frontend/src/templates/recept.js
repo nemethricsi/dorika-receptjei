@@ -10,6 +10,7 @@ const Image = styled(Img)`
   aspect-ratio: 16 / 9;
   object-fit: cover;
   margin: 1rem 0;
+  border-radius: 6px;
 `;
 
 export default function Recept({ data }) {
