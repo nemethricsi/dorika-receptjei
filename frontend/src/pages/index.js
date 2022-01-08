@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { graphql, Link } from 'gatsby';
+import { ContainerStyles } from '../styles/ContainerStyles';
 
 const IndexPage = ({ data }) => {
   const receptek = data.allSanityRecept.nodes;
   return (
-    <main>
+    <ContainerStyles>
       <h1>Dóri receptjei</h1>
       <ul>
         {receptek.map(({ _id, nev, slug }) => (
@@ -13,7 +14,7 @@ const IndexPage = ({ data }) => {
           </li>
         ))}
       </ul>
-    </main>
+    </ContainerStyles>
   );
 };
 

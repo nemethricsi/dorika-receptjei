@@ -1,6 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 import { graphql, Link } from 'gatsby';
 import Img from 'gatsby-plugin-sanity-image';
+import { ContainerStyles } from '../styles/ContainerStyles';
+
+const Image = styled(Img)`
+  display: block;
+  width: 100%;
+`;
 
 export default function Recept({ data }) {
   const {
@@ -21,21 +28,23 @@ export default function Recept({ data }) {
 
   return (
     <>
-      <Link to='/'>Vissza</Link>
-      <h1 style={{ marginBottom: 0 }}>{nev}</h1>
-      {url && (
-        <a
-          href={url}
-          target='_blank'
-          rel='noopener noreferrer'
-          style={{ color: 'blue' }}
-        >
-          {text}
-        </a>
-      )}
-      <Img {...kep} alt='kep' />
-      <ul>{hozzavalokList}</ul>
-      <div>{elkeszitesList}</div>
+      <ContainerStyles>
+        <Link to='/'>Vissza</Link>
+        <h1 style={{ marginBottom: 0 }}>{nev}</h1>
+        {url && (
+          <a
+            href={url}
+            target='_blank'
+            rel='noopener noreferrer'
+            style={{ color: 'blue' }}
+          >
+            {text}
+          </a>
+        )}
+        {kep && <Image {...kep} alt='kep' />}
+        <ul>{hozzavalokList}</ul>
+        <div>{elkeszitesList}</div>
+      </ContainerStyles>
     </>
   );
 }
